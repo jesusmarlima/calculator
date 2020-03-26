@@ -8,12 +8,14 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tvInput"
         android:layout_width="match_parent"
         android:layout_height="250sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:maxLength="12"
+        android:textSize="60sp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!--    row1-->
@@ -148,7 +150,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="."
-            android:onClick="onDigit"/>
+            android:onClick="onDot"/>
 
         <Button
             android:id="@+id/btnZero"
@@ -164,7 +166,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="clear"
-            android:onClick="onDigit"/>
+            android:onClick="onClear"/>
 
         <Button
             android:id="@+id/btnPlus"
