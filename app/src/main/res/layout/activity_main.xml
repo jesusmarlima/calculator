@@ -16,6 +16,8 @@
         app:layout_constraintRight_toRightOf="parent"
         android:maxLength="12"
         android:textSize="60sp"
+        android:padding="10dp"
+        android:gravity="right|bottom|center_vertical"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!--    row1-->
@@ -54,7 +56,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="/"
-            android:onClick="onDigit"/>
+            android:onClick="onOperator"/>
 
     </LinearLayout>
 
@@ -94,7 +96,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="*"
-            android:onClick="onDigit"/>
+            android:onClick="onOperator"/>
 
     </LinearLayout>
 
@@ -134,7 +136,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="-"
-            android:onClick="onDigit"/>
+            android:onClick="onOperator"/>
 
     </LinearLayout>
 
@@ -174,7 +176,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="+"
-            android:onClick="onDigit"/>
+            android:onClick="onOperator"/>
 
     </LinearLayout>
 
@@ -190,7 +192,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="="
-            android:onClick="onDigit"/>
+            android:onClick="onEqual"/>
     </LinearLayout>
 
 </LinearLayout>
