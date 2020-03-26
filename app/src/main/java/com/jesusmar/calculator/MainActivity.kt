@@ -17,11 +17,11 @@ class MainActivity : AppCompatActivity() {
         tvInput.append((view as Button).text)
     }
 
-    fun onClear(view: View){
+    fun onClear(view:View){
         tvInput.text = ""
     }
 
-    fun onDot(view: View){
+    fun onDot(view:View){
         if (tvInput.text.length > 0
             && tvInput.text.last() != '.'
             && !tvInput.text.contains('.', true)) {
@@ -30,57 +30,50 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onOperator(view: View){
-        var negativeNumber = false
         var tvValue = tvInput.text.toString()
         val buttonText = (view as Button).text.toString()
 
-        if (tvValue.startsWith('-')){
-            negativeNumber = true
-            tvValue = tvValue.substring(1, tvValue.length)
-        } else
-
         if (tvValue.isEmpty()
             && buttonText.equals("-")){
-            tvInput.append((view as Button).text)
+            tvInput.append(view.text)
             return
         }
+
+        tvValue = removeSignFromNegativeNumber(tvValue)
 
         val operators = listOf<Char>('*','-','+','/')
         val hasOneInText: (CharSequence, Char) -> Boolean = { text: CharSequence, char: Char -> text.contains(char) }
         if (tvInput.text.isNotEmpty()
             && !operators.any { o -> hasOneInText(tvValue,o) }) {
-            tvInput.append((view as Button).text)
+            tvInput.append(view.text)
         }
 
-        if (negativeNumber) {
-            tvValue = "-$tvValue"
-        }
     }
 
-    fun onEqual(view: View){
-        var negativeNumber = false
-        var tvValue = tvInput.text.toString()
-
-        if (tvValue.startsWith('-')){
-            negativeNumber = true
-            tvValue = tvValue.substring(1, tvValue.length)
-        }
+    fun onEqual(view:View){
+        val original = tvInput.text.toString()
+        var tvValue = removeSignFromNegativeNumber(original)
 
         if (isValidCalculation(tvValue)){
             val match = "[-|+|*|/]{1}".toRegex().find(tvValue)!!
             val operator = match.value
             val tvSplited = tvValue.split(operator)
 
-            val first = if (negativeNumber) "-" + tvSplited[0] else tvSplited[0]
+            val first = addNegativeSignIfNeeded(original, tvValue, tvSplited[0] ).toDouble()
+            val second = tvSplited[1].toDouble()
 
-            val result = doCalculation(first.toDouble(), tvSplited[1].toDouble(), operator)
+            val result = doCalculation(first, second, operator)
 
             tvInput.text = result.toString()
-
         }
+    }
 
+    fun removeSignFromNegativeNumber(text:String):String {
+        return  if (text.startsWith('-')) text.substring(1,text.length) else text
+    }
 
-
+    fun addNegativeSignIfNeeded(original:String, modified:String, absoluteValue: String):String {
+        return if (!original.equals(modified)) "-${absoluteValue}" else absoluteValue
     }
 
     private fun doCalculation(valueLeft: Double, valueRight: Double, operator: String): Double{
